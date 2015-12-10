@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 
 import de.arktis.javafx.contact.controller.PersonEditDialogController;
 import de.arktis.javafx.contact.controller.PersonOverviewController;
+import de.arktis.javafx.contact.controller.RootLayoutController;
 import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.model.PersonListWrapper;
 import javafx.application.Application;
@@ -68,19 +69,35 @@ public class ContactMain extends Application {
     /**
      * Initializes the root layout.
      */
+    /**
+     * Initializes the root layout and tries to load the last opened
+     * person file.
+     */
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ContactMain.class.getResource("/de/arktis/javafx/contact/view/RootLayout.fxml"));
+            loader.setLocation(ContactMain.class
+                    .getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+
+            // Give the controller access to the main app.
+            RootLayoutController controller = loader.getController();
+            controller.setMainApp(this);
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        // Try to load last opened person file.
+        File file = getPersonFilePath();
+        if (file != null) {
+            loadPersonDataFromFile(file);
         }
     }
 
