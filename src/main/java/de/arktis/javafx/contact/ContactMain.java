@@ -200,7 +200,7 @@ public class ContactMain extends Application {
             prefs.put("filePath", file.getPath());
 
             // Update the stage title.
-            primaryStage.setTitle("AddressApp - " + file.getName());
+            primaryStage.setTitle("Lucene_Search_under_Hibernate_Demo_1.0 SNAPSHOT");
         } else {
             prefs.remove("filePath");
 

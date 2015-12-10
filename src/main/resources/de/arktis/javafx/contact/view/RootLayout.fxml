@@ -37,7 +37,6 @@
       </MenuBar>
    </top>
    <stylesheets>
-      <URL value="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" />
       <URL value="@../../../../../styles/DarkTheme.css" />
    </stylesheets>
 </BorderPane>
