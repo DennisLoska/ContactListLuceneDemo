@@ -4,16 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Neu" />
-                  <MenuItem mnemonicParsing="false" text="Öffnen" />
-                  <MenuItem mnemonicParsing="false" text="Speichern" />
-                  <MenuItem mnemonicParsing="false" text="Speichern Unter..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleNew" text="Neu" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Öffnen" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Speichern" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Speichern Unter..." />
               <MenuItem mnemonicParsing="false" text="Schließen" />
             </items>
           </Menu>
@@ -24,7 +24,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
             </items>
           </Menu>
         </menus>
