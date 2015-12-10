@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonOverviewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" stylesheets="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonOverviewController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="369.0" layoutY="70.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -57,9 +57,9 @@
                         <Label fx:id="birthdayLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="196.0" layoutY="244.0" prefHeight="40.0" prefWidth="286.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="21.0">
+                  <ButtonBar layoutX="196.0" layoutY="244.0" prefHeight="21.0" prefWidth="405.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="21.0">
                     <buttons>
-                      <Button mnemonicParsing="false" onMouseClicked="#handleNewPerson" prefHeight="25.0" prefWidth="104.0" text="Neu..." />
+                      <Button mnemonicParsing="false" onMouseClicked="#handleNewPerson" prefHeight="31.0" prefWidth="104.0" text="Neu..." />
                         <Button mnemonicParsing="false" onMouseClicked="#handleEditPerson" text="Bearbeiten..." />
                         <Button mnemonicParsing="false" onAction="#handleDeletePerson" text="Löschen" />
                     </buttons>

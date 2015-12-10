@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="385.0" prefWidth="339.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonEditDialogController">
+<AnchorPane prefHeight="385.0" prefWidth="339.0" stylesheets="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonEditDialogController">
    <children>
       <GridPane layoutX="18.0" layoutY="32.0" prefHeight="287.0" prefWidth="303.0">
          <columnConstraints>
