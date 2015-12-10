@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
@@ -65,7 +66,7 @@
                         <Button mnemonicParsing="false" onAction="#handleDeletePerson" text="Löschen" />
                     </buttons>
                   </ButtonBar>
-                  <TextField layoutX="247.0" layoutY="219.0" AnchorPane.bottomAnchor="54.0" AnchorPane.rightAnchor="21.0" />
+                  <TextField fx:id="searchField" layoutX="247.0" layoutY="219.0" onKeyReleased="#handleSearchEnter" AnchorPane.bottomAnchor="54.0" AnchorPane.rightAnchor="21.0" />
                   <Label layoutX="140.0" layoutY="216.0" text="Suche:" AnchorPane.bottomAnchor="62.0" AnchorPane.rightAnchor="233.0" />
                </children>
             </AnchorPane>
@@ -73,7 +74,6 @@
       </SplitPane>
    </children>
    <stylesheets>
-      <URL value="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" />
       <URL value="@../../../../../styles/DarkTheme.css" />
    </stylesheets>
 </AnchorPane>

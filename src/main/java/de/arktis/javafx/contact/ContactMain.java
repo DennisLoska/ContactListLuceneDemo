@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +30,7 @@ import javax.xml.bind.Unmarshaller;
 public class ContactMain extends Application {
 
     private Stage primaryStage;
+    private Stage listStage;
     private BorderPane rootLayout;
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
@@ -296,6 +298,35 @@ public class ContactMain extends Application {
             dialogStage.show();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showSearchPopup(){
+    //TODO 2. teil weitermachen
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(ContactMain.class.getResource("/de/arktis/javafx/contact/view/SearchPopup.fxml"));
+            ListView  page = (ListView) loader.load();
+            this.listStage = new Stage();
+            listStage.initModality(Modality.APPLICATION_MODAL);
+            listStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            listStage.setScene(scene);
+
+            listStage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeSearchPopup(){
+        try {
+            this.listStage.close();
+        }catch(NullPointerException e){
             e.printStackTrace();
         }
     }

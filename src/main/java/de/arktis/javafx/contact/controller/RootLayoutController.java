@@ -128,5 +128,4 @@ public class RootLayoutController {
     private void handleShowBirthdayStatistics() {
         contactMain.showBirthdayStatistics();
     }
-
 }

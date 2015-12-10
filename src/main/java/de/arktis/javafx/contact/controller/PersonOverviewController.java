@@ -5,13 +5,15 @@ package de.arktis.javafx.contact.controller;
  */
 
 import de.arktis.javafx.contact.util.DateUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.ContactMain;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class PersonOverviewController {
     @FXML
@@ -36,7 +38,6 @@ public class PersonOverviewController {
 
     // Reference to the main application.
     private ContactMain contactMain;
-
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -157,6 +158,19 @@ public class PersonOverviewController {
         }
     }
 
+    @FXML
+    private void handleSearchEnter(KeyEvent event){
+        if(event.getCode() == KeyCode.ENTER) {
+        System.out.println("enter");
+            contactMain.closeSearchPopup();
+    }else {
+            contactMain.showSearchPopup();
+        System.out.println("kein enter");
+    }
+
+        //searchController.handleSearchEnter();
+
+    }
     /**
      * Is called by the main application to give a reference back to itself.
      *
