@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="385.0" prefWidth="339.0" stylesheets="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonEditDialogController">
+<AnchorPane prefHeight="385.0" prefWidth="339.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonEditDialogController">
    <children>
       <GridPane layoutX="18.0" layoutY="32.0" prefHeight="287.0" prefWidth="303.0">
          <columnConstraints>
@@ -40,4 +41,8 @@
       <Button layoutX="230.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleCancel" text="Cancel" />
       <Button layoutX="145.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleOk" text="OK" />
    </children>
+   <stylesheets>
+      <URL value="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" />
+      <URL value="@../../../../../styles/DarkTheme.css" />
+   </stylesheets>
 </AnchorPane>

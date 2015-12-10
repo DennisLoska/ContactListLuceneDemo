@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" stylesheets="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonOverviewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonOverviewController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="369.0" layoutY="70.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -71,4 +72,8 @@
         </items>
       </SplitPane>
    </children>
+   <stylesheets>
+      <URL value="@../../../../../../../../../../../../Program%20Files/Java/jdk1.8.0_66/com/DarkTheme.css" />
+      <URL value="@../../../../../styles/DarkTheme.css" />
+   </stylesheets>
 </AnchorPane>
