@@ -280,7 +280,7 @@ public class ContactMain extends Application {
         try {
             // Load the fxml file and create a new stage for the popup.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ContactMain.class.getResource("view/BirthdayStatistics.fxml"));
+            loader.setLocation(ContactMain.class.getResource("/de/arktis/javafx/contact/view/BirthdayStatistics.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Birthday Statistics");
