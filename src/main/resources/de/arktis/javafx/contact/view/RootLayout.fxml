@@ -10,7 +10,11 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Neu" />
+                  <MenuItem mnemonicParsing="false" text="Öffnen" />
+                  <MenuItem mnemonicParsing="false" text="Speichern" />
+                  <MenuItem mnemonicParsing="false" text="Speichern Unter..." />
+              <MenuItem mnemonicParsing="false" text="Schließen" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
