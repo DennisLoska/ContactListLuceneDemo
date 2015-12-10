@@ -5,8 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="385.0" prefWidth="339.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="385.0" prefWidth="339.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.arktis.javafx.contact.controller.PersonEditDialogController">
    <children>
       <GridPane layoutX="18.0" layoutY="32.0" prefHeight="287.0" prefWidth="303.0">
          <columnConstraints>
@@ -30,15 +29,15 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stadt" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PLZ" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Geburtsdatum" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="firstNameField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="lastNameField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="streetField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="postalCodeField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <TextField fx:id="cityField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <TextField fx:id="birthdayField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Button layoutX="236.0" layoutY="332.0" mnemonicParsing="false" text="Cancel" />
-      <Button layoutX="189.0" layoutY="332.0" mnemonicParsing="false" text="OK" />
+      <Button layoutX="236.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleCancel" text="Cancel" />
+      <Button layoutX="189.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#handleOk" text="OK" />
    </children>
 </AnchorPane>
