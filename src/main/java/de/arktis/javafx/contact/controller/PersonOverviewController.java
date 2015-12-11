@@ -4,7 +4,7 @@ package de.arktis.javafx.contact.controller;
  * Created by Pati on 09.12.2015.
  */
 
-import de.arktis.javafx.contact.SearchEngine.LucenePersonEngine;
+import de.arktis.javafx.contact.SearchEngine.LuceneIndexSearcher;
 import de.arktis.javafx.contact.model.Searchrequest;
 import de.arktis.javafx.contact.util.DateUtil;
 import javafx.fxml.FXML;
@@ -43,7 +43,7 @@ public class PersonOverviewController {
 
     private Searchrequest request;
     //private LuceneSearch lucene;
-    private LucenePersonEngine lucineEngine;
+    private LuceneIndexSearcher iSearcher;
 
     // Reference to the main application.
     private ContactMain contactMain;
@@ -184,11 +184,10 @@ public class PersonOverviewController {
     @FXML
     private void handleSearch(){
 
-        //Initialisierung der SearchEngine
-        lucineEngine = new LucenePersonEngine();
+        //Initialisierung des IndexSearchWortes
         request = new Searchrequest(this.searchField.getText());
         String requesthelper = request.getSearchField();
-        System.out.println(requesthelper);
+        iSearcher = new LuceneIndexSearcher(requesthelper);
 
     }
 
