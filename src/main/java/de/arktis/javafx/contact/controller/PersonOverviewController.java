@@ -185,7 +185,6 @@ public class PersonOverviewController {
         request = new Searchrequest(this.searchField.getText());
 
         String requesthelper = request.getSearchField();
-        System.out.println(request.getSearchField());
 
         try {
             lucineEngine.engineMain(requesthelper);

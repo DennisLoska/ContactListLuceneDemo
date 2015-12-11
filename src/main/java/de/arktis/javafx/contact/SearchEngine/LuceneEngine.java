@@ -13,9 +13,9 @@ import java.util.Scanner;
 /**
  * Created by Pati on 11.12.2015.
  */
-public class LuceneEngine  {
+public class LuceneEngine {
 
-    public LuceneEngine(){
+    public LuceneEngine() {
 
     }
 
@@ -61,8 +61,8 @@ public class LuceneEngine  {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally{
-            if(session != null) {
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -77,16 +77,24 @@ public class LuceneEngine  {
 
         Scanner scanner = new Scanner(System.in);
 
-        while(searchBarInput != null) {
+        while (searchBarInput != null) {
             List<Contact> result = search(searchBarInput);
 
-            System.out.println("\n\n>>>>>>Record found for '" + searchBarInput + "'");
 
-            for (Contact contact : result) {
-                System.out.println(contact);
-            }
+                for (Contact contact : result) {
+                    System.out.println(contact);
+
+                }
+
+                //setzt den Suchwert searchBarInput zurück um eine neue Suche zu ermöglichen
+                searchBarInput = null;
+
 
             searchBarInput = null;
+
+            //TODO Bedingung iimplementieren, falls die Suche keinen Treffer ergab.
+           //if(){ System.out.println("\n\nKeinen Kontakt mit dem Namen '" + searchBarInput + "'" + " gefunden.")};
+
         }
     }
 }
