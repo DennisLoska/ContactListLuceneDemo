@@ -10,6 +10,7 @@ import de.arktis.javafx.contact.controller.PersonOverviewController;
 import de.arktis.javafx.contact.controller.RootLayoutController;
 import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.model.PersonListWrapper;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +18,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -27,11 +27,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+
 public class ContactMain extends Application {
 
     private Stage primaryStage;
     private Stage listStage;
     private BorderPane rootLayout;
+
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
@@ -110,6 +112,10 @@ public class ContactMain extends Application {
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public Stage getListStage() {
+        return listStage;
     }
 
     /**
@@ -303,7 +309,7 @@ public class ContactMain extends Application {
     }
 
     public void showSearchPopup(){
-    //TODO 2. teil weitermachen
+    //TODO 2. PopUp-Implementierung
         try {
             // Load the fxml file and create a new stage for the popup.
             FXMLLoader loader = new FXMLLoader();
@@ -323,15 +329,22 @@ public class ContactMain extends Application {
         }
     }
 
+    //TODO Popup
     public void closeSearchPopup(){
-        try {
-            this.listStage.close();
-        }catch(NullPointerException e){
-            e.printStackTrace();
-        }
+       if(listStage != null) {
+           this.listStage.close();
+       } else {
+
+       }
+
+
     }
+
 
     public static void main(String[] args) {
         launch(args);
+
+
     }
+
 }

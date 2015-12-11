@@ -4,10 +4,9 @@ package de.arktis.javafx.contact.controller;
  * Created by Pati on 09.12.2015.
  */
 
+import de.arktis.javafx.contact.SearchEngine.LuceneEngine;
+import de.arktis.javafx.contact.model.Searchrequest;
 import de.arktis.javafx.contact.util.DateUtil;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import de.arktis.javafx.contact.model.Person;
@@ -35,6 +34,16 @@ public class PersonOverviewController {
     private Label cityLabel;
     @FXML
     private Label birthdayLabel;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private ListView listView;
+
+    private Searchrequest request;
+    //private LuceneSearch lucene;
+    private LuceneEngine lucineEngine;
 
     // Reference to the main application.
     private ContactMain contactMain;
@@ -159,18 +168,38 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleSearchEnter(KeyEvent event){
-        if(event.getCode() == KeyCode.ENTER) {
-        System.out.println("enter");
+    private void handleSearchEnter(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            System.out.println("enter");
+            System.out.println(event.getText());
             contactMain.closeSearchPopup();
-    }else {
-            contactMain.showSearchPopup();
-        System.out.println("kein enter");
+
+        }
     }
 
-        //searchController.handleSearchEnter();
+    //TODO Nach Lucene übergeben
+    @FXML
+    private void handleSearch(){
+
+        lucineEngine = new LuceneEngine();
+        request = new Searchrequest(this.searchField.getText());
+
+        String requesthelper = request.getSearchField();
+        System.out.println(request.getSearchField());
+
+        try {
+            lucineEngine.engineMain(requesthelper);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //öffnet Extra-Fenster
+       // contactMain.showSearchPopup();
+
+
 
     }
+
+
     /**
      * Is called by the main application to give a reference back to itself.
      *
