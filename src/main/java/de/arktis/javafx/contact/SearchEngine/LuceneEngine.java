@@ -28,9 +28,14 @@ public class LuceneEngine {
         fullTextSession.close();
     }
 
+    /*
+     *Die Suchanfrage wird an search() übergeben und durch Hibernate und Licene verarbeitet.
+     *Der Datensatz wird im Feld "name" nach Treffern durchsucht.
+     */
     private static List<Contact> search(String queryString) {
         Session session = HibernateUtil.getSession();
         FullTextSession fullTextSession = Search.getFullTextSession(session);
+
 
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Contact.class).get();
         org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("name").matching(queryString).createQuery();
@@ -70,6 +75,7 @@ public class LuceneEngine {
 
     public void engineMain(String searchBarInput) throws InterruptedException {
 
+        //Holt sich via Hibernate den Datensatz aus der Datenbank
         displayContactTableData();
 
         // Create an initial Lucene index for the data already present in the database

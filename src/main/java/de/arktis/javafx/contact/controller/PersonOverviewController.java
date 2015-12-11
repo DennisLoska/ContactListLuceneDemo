@@ -179,8 +179,13 @@ public class PersonOverviewController {
 
     //TODO Nach Lucene übergeben
     @FXML
+
+    /*
+     *Aktion, wenn der Such-Button angeklickt wird.
+     */
     private void handleSearch(){
 
+        //Initialisierung der SearchEngine
         lucineEngine = new LuceneEngine();
         request = new Searchrequest(this.searchField.getText());
 
