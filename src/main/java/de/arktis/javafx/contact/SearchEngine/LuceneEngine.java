@@ -86,7 +86,6 @@ public class LuceneEngine {
         while (searchBarInput != null) {
             List<Contact> result = search(searchBarInput);
 
-
                 for (Contact contact : result) {
                     System.out.println(contact);
 
@@ -95,11 +94,8 @@ public class LuceneEngine {
                 //setzt den Suchwert searchBarInput zurück um eine neue Suche zu ermöglichen
                 searchBarInput = null;
 
-
             searchBarInput = null;
-
-            //TODO Bedingung iimplementieren, falls die Suche keinen Treffer ergab.
-           //if(){ System.out.println("\n\nKeinen Kontakt mit dem Namen '" + searchBarInput + "'" + " gefunden.")};
+            System.out.println("\n\n Nichts mit " + searchBarInput + " gefunden? Versuchen Sie einen anderen Namen");
 
         }
     }
