@@ -55,8 +55,9 @@ public class LuceneEngine  {
             List<Contact> contactList = session.createQuery("from Contact").list();
 
             for (Contact contact : contactList) {
-                System.out.println(contact);
+                //System.out.println(contact);
             }
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -69,33 +70,23 @@ public class LuceneEngine  {
 
     public void engineMain(String searchBarInput) throws InterruptedException {
 
-        System.out.println("\n\n******Data stored in Contact table******\n");
         displayContactTableData();
 
         // Create an initial Lucene index for the data already present in the database
         doIndex();
 
         Scanner scanner = new Scanner(System.in);
-        /*
-        consoleInput = null;
-        */
 
-        while (true) {
-            // Prompt the user to enter query string
-            System.out.print("\n\nEnter search key (To exit type 'X')");
-            searchBarInput = scanner.nextLine();
-
-            if("X".equalsIgnoreCase(searchBarInput)) {
-                System.out.println("End");
-                System.exit(0);
-            }
-
+        while(searchBarInput != null) {
             List<Contact> result = search(searchBarInput);
+
             System.out.println("\n\n>>>>>>Record found for '" + searchBarInput + "'");
 
             for (Contact contact : result) {
                 System.out.println(contact);
             }
+
+            searchBarInput = null;
         }
     }
 }
