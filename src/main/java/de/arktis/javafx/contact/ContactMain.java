@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
+//import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.controller.BirthdayStatisticsController;
 import de.arktis.javafx.contact.controller.PersonEditDialogController;
 import de.arktis.javafx.contact.controller.PersonOverviewController;
@@ -22,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.lucene.queryparser.classic.ParseException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -341,7 +343,8 @@ public class ContactMain extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
+
         launch(args);
 
 

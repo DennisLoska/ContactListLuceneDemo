@@ -1,0 +1,5 @@
+<root>
+  <item name='org.apache.lucene.store.FSDirectory java.io.File getDirectory()'>
+    <annotation name='java.lang.annotation.Deprecated'/>
+  </item>
+</root>

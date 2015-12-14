@@ -1,3 +1,5 @@
+/*
+
 package de.arktis.javafx.contact.SearchEngine;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -13,9 +15,6 @@ import org.apache.lucene.util.Version;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Pati on 11.12.2015.
- */
 public class LuceneUtils {
 
     private LuceneUtils lucy = new LuceneUtils();
@@ -49,6 +48,5 @@ public class LuceneUtils {
         writer.close(true);
     }
 
-
-
 }
+*/

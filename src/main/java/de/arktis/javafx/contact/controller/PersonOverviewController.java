@@ -5,6 +5,7 @@ package de.arktis.javafx.contact.controller;
  */
 
 import de.arktis.javafx.contact.SearchEngine.LuceneIndexSearcher;
+import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.model.Searchrequest;
 import de.arktis.javafx.contact.util.DateUtil;
 import javafx.fxml.FXML;
@@ -13,6 +14,9 @@ import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.ContactMain;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.lucene.queryparser.classic.ParseException;
+
+import java.io.IOException;
 
 public class PersonOverviewController {
     @FXML
@@ -182,12 +186,12 @@ public class PersonOverviewController {
      *TODO Nach Lucene übergeben
      */
     @FXML
-    private void handleSearch(){
+    private void handleSearch() throws IOException, ParseException {
 
         //Initialisierung des IndexSearchWortes
         request = new Searchrequest(this.searchField.getText());
         String requesthelper = request.getSearchField();
-        iSearcher = new LuceneIndexSearcher(requesthelper);
+        LuceneTestImplementation searchEngine = new LuceneTestImplementation();
 
     }
 

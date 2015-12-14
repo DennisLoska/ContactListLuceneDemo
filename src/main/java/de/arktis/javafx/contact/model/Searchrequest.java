@@ -12,8 +12,8 @@ public class Searchrequest {
 
     //Konstruktor
 
-    public Searchrequest(String searchField) {
-        this.searchField = new SimpleStringProperty(searchField);
+    public Searchrequest() {
+         new SimpleStringProperty(searchField);
     }
 
 
