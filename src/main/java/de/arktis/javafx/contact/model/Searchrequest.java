@@ -8,18 +8,16 @@ import javafx.beans.property.StringProperty;
  */
 public class Searchrequest {
 
-    private final StringProperty searchField;
+    private final StringProperty searchField = new SimpleStringProperty();
 
     //Konstruktor
-
     public Searchrequest() {
-         new SimpleStringProperty(searchField);
-    }
 
+    }
 
     public StringProperty searchFieldProperty() {
 
-        return searchField;
+        return this.searchField;
 
     }
 

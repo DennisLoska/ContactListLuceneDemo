@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 
 import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.model.Searchrequest;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -22,13 +24,13 @@ import org.apache.lucene.store.RAMDirectory;
 public class LuceneTestImplementation {
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
-    private Searchrequest searchWord = new Searchrequest();
-    String[] args = new String[0];
+    private Searchrequest searchReQuest = new Searchrequest();
+    private final String searchField;
 
-    public LuceneTestImplementation() throws IOException, ParseException {
 
-        searchEngine(args);
+    public LuceneTestImplementation(String searchField) throws IOException, ParseException {
 
+        this.searchField = searchField;
     }
 
     public void searchEngine(String[] args) throws IOException, ParseException {
@@ -42,11 +44,11 @@ public class LuceneTestImplementation {
             index = new RAMDirectory();
 
         StandardAnalyzer analyzer = new StandardAnalyzer();
-        IndexWriterConfig iconfig = new IndexWriterConfig(analyzer);
+        IndexWriterConfig iConfig = new IndexWriterConfig(analyzer);
 
         IndexWriter w = null;
         try {
-            w = new IndexWriter(index, iconfig);
+            w = new IndexWriter(index, iConfig);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,9 +94,9 @@ public class LuceneTestImplementation {
 
         System.out.println("index generated");
 
-
         // parse query over multiple fields
-        String querystr = args.length > 0 ? args[0] : searchWord.getSearchField();
+        String querystr = args.length > 0 ? args[0] : this.searchField;
+        System.out.println(querystr);
         Query q = new QueryParser("title", analyzer).parse(querystr);
 
         // searching ...

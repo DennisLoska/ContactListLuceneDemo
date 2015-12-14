@@ -188,10 +188,13 @@ public class PersonOverviewController {
     @FXML
     private void handleSearch() throws IOException, ParseException {
 
-        //Initialisierung des IndexSearchWortes
-        request = new Searchrequest(this.searchField.getText());
-        String requesthelper = request.getSearchField();
-        LuceneTestImplementation searchEngine = new LuceneTestImplementation();
+
+        request = new Searchrequest();
+        request.setSearchField(searchField.getText());
+        String searchRequest = request.getSearchField();
+        LuceneTestImplementation luceneQuery = new LuceneTestImplementation(searchRequest);
+        String[] args = new String[0];
+        luceneQuery.searchEngine(args);
 
     }
 
