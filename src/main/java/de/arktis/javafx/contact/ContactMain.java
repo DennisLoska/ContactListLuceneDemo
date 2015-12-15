@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.prefs.Preferences;
 
 //import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
+import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.controller.BirthdayStatisticsController;
 import de.arktis.javafx.contact.controller.PersonEditDialogController;
 import de.arktis.javafx.contact.controller.PersonOverviewController;
@@ -35,7 +36,6 @@ public class ContactMain extends Application {
     private Stage primaryStage;
     private Stage listStage;
     private BorderPane rootLayout;
-
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
@@ -346,7 +346,6 @@ public class ContactMain extends Application {
     public static void main(String[] args) throws IOException, ParseException {
 
         launch(args);
-
 
     }
 

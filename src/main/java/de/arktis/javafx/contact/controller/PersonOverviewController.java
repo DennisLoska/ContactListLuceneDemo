@@ -49,6 +49,7 @@ public class PersonOverviewController {
     //private LuceneSearch lucene;
     private LuceneIndexSearcher iSearcher;
 
+    private PersonOverviewController persOvCtrl;
     // Reference to the main application.
     private ContactMain contactMain;
     /**
@@ -172,11 +173,10 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleSearchEnter(KeyEvent event) {
+    private void handleSearchEnter(KeyEvent event) throws IOException, ParseException {
         if (event.getCode() == KeyCode.ENTER) {
-            System.out.println("enter");
-            System.out.println(event.getText());
-            contactMain.closeSearchPopup();
+            handleSearch();
+           // contactMain.closeSearchPopup();
 
         }
     }
@@ -188,13 +188,12 @@ public class PersonOverviewController {
     @FXML
     private void handleSearch() throws IOException, ParseException {
 
-
         request = new Searchrequest();
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
-        LuceneTestImplementation luceneQuery = new LuceneTestImplementation(searchRequest);
-        String[] args = new String[0];
-        luceneQuery.searchEngine(args);
+        LuceneTestImplementation luceneQuery = new LuceneTestImplementation(searchRequest,new ContactMain());
+        luceneQuery.updateDocument();
+        luceneQuery.searchEngine();
 
     }
 
@@ -209,5 +208,9 @@ public class PersonOverviewController {
 
         // Add observable list data to the table
         personTable.setItems(contactMain.getPersonData());
+    }
+
+    public ContactMain getContactMain(){
+        return this.contactMain;
     }
 }
