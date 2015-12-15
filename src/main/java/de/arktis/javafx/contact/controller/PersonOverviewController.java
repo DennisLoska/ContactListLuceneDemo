@@ -192,8 +192,9 @@ public class PersonOverviewController {
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
         LuceneTestImplementation luceneQuery = new LuceneTestImplementation(searchRequest,new ContactMain());
-        luceneQuery.updateDocument();
+        //luceneQuery.updateDocument();
         luceneQuery.searchEngine();
+
 
     }
 
