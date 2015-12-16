@@ -12,24 +12,17 @@ public class Searchrequest {
 
     //Konstruktor
     public Searchrequest() {
-
     }
 
     public StringProperty searchFieldProperty() {
-
         return this.searchField;
-
-    }
-
-    public void setSearchField(String searchField) {
-
-        this.searchField.set(searchField);
-
     }
 
     public String getSearchField() {
-
         return searchField.get();
+    }
 
+    public void setSearchField(String searchField) {
+        this.searchField.set(searchField);
     }
 }

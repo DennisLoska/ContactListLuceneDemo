@@ -8,6 +8,7 @@ import de.arktis.javafx.contact.SearchEngine.LuceneIndexSearcher;
 import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.model.Searchrequest;
 import de.arktis.javafx.contact.util.DateUtil;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import de.arktis.javafx.contact.model.Person;
@@ -45,7 +46,6 @@ public class PersonOverviewController {
     @FXML
     private ListView listView;
     private Searchrequest request;
-    //private LuceneSearch lucene;
     private LuceneIndexSearcher iSearcher;
     private PersonOverviewController persOvCtrl;
     // Reference to the main application.
@@ -189,25 +189,45 @@ public class PersonOverviewController {
         String searchRequest = request.getSearchField();
         this.luceneQuery = new LuceneTestImplementation(searchRequest, new ContactMain());
         luceneQuery.searchEngine();
-        this.foundPerson.setFirstName(luceneQuery.getFuzzyResults());
         setPersonDetails(this.foundPerson);
 
     }
 
     public void setPersonDetails(Person foundPerson) {
 
+        this.foundPerson = foundPerson;
         int i = 0;
         for (Person person : this.personTable.getItems()) {
             if (this.luceneQuery.getFuzzyResults().equals(personTable.getItems().get(i).getFullName())) {
                 this.foundPerson = personTable.getItems().get(i);
                 showPersonDetails(this.foundPerson);
+                System.out.println();
                 break;
             } else {
-                this.foundPerson = new Person("Nicht", "Gefunden");
-                showPersonDetails(this.foundPerson);
+                person = new Person("Nicht", "Gefunden");
+                showPersonDetails(person);
             }
             i++;
         }
+    }
+
+
+    public void contactListener(){
+
+        contactMain.getPersonData().addListener(
+                new ListChangeListener<Person>() {
+                    @Override
+                    public void onChanged(Change<? extends Person> change) {
+                        try {
+                            luceneQuery.updateDocument();
+                            System.out.println("Gute Nacht.");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+        );
     }
 
     public Person getFoundPerson() {

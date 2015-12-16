@@ -1,9 +1,10 @@
 package de.arktis.javafx.contact.SearchEngine;
 
 import de.arktis.javafx.contact.ContactMain;
-import de.arktis.javafx.contact.controller.PersonEditDialogController;
 import de.arktis.javafx.contact.controller.PersonOverviewController;
 import de.arktis.javafx.contact.model.Person;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -19,28 +20,41 @@ import java.io.IOException;
 public class LuceneTestImplementation {
 
     private final int ID = 7;
-    private final String searchField;
+    private String searchField;
     private ContactMain contactMain;
     private String[] fuzzyResults;
     private Document d = new Document();
-    private PersonOverviewController personOvctrl = new PersonOverviewController();
     private Document doc;
     private IndexWriter indWriter;
     private IndexReader reader;
     private IndexWriterConfig indexConfig;
     private IndexWriterConfig indexUpdateConfig;
+    private PersonOverviewController persOvCtrl;
+
+
+    //TODO multiple Konstruktoren ermöglichen
+    public LuceneTestImplementation(){
+
+    };
 
     public LuceneTestImplementation(String searchField, ContactMain contactMain) throws IOException, ParseException {
         this.searchField = searchField;
         this.contactMain = contactMain;
-    }
+    };
 
     //TODO Die Update-Funktion implementieren, sodass gelöschte , bearbeitete und neu hinzugefügte Kontakte indexiert werden
-    public void updateDocument(IndexWriter indWriter, Document doc, IndexReader reader) throws IOException {
+    public void updateDocument() throws IOException {
 
-        this.indWriter = indWriter;
-        this.doc = doc;
-        this.reader = reader;
+        this.doc = null;
+        indWriter.addDocument(doc);
+
+        persOvCtrl = new PersonOverviewController();
+        Person found = persOvCtrl.getFoundPerson();
+        contactMain.getPersonData().add(found);
+        Document addedDoc = reader.document(0);
+        addedDoc.add(new Field("title", found.getFirstName() + " "
+                + found.getLastName(), Field.Store.YES,
+                Field.Index.ANALYZED));
 
         indWriter.tryDeleteDocument(reader,this.ID);
         indWriter.updateDocument(new Term("title", "test"),doc);
@@ -48,7 +62,6 @@ public class LuceneTestImplementation {
 
     }
 
-    //TODO ObservableList Listener einbauen um Veränderungen der gegebenen Kontakte zu indexieren
     public void searchEngine() throws IOException, ParseException {
         // create some index
         // we could also create an index in our ram ..
@@ -115,7 +128,7 @@ public class LuceneTestImplementation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        updateDocument(indWriter, doc,reader);
+       //updateDocument(indWriter, doc,reader);
         reader.close();
     }
 
@@ -127,4 +140,5 @@ public class LuceneTestImplementation {
         }
         return foundName;
     }
+
 }

@@ -15,6 +15,7 @@ import de.arktis.javafx.contact.model.PersonListWrapper;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,8 +37,10 @@ public class ContactMain extends Application {
     private Stage primaryStage;
     private Stage listStage;
     private BorderPane rootLayout;
-    private ObservableList<Person> personData = FXCollections.observableArrayList();
+    private LuceneTestImplementation luceneEngine;
+    //TODO ObservableList Listener einbauen um Veränderungen der gegebenen Kontakte zu indexieren
 
+    private ObservableList<Person> personData = FXCollections.observableArrayList();
     /**
      * Constructor
      */
@@ -296,7 +299,7 @@ public class ContactMain extends Application {
             e.printStackTrace();
         }
     }
-    //TODO 2. PopUp-Implementierung
+    //TODO PopUp-Implementierung mit Dropdown-Menü
     public void showSearchPopup(){
 
         try {
@@ -317,7 +320,7 @@ public class ContactMain extends Application {
             e.printStackTrace();
         }
     }
-    //TODO Popup schließen bei ENTER-Wahl der PErson aus dem Dropdown-Menü
+    //TODO Popup schließen bei ENTER-Wahl der Person aus dem Dropdown-Menü
     public void closeSearchPopup(){
        if(listStage != null) {
            this.listStage.close();
