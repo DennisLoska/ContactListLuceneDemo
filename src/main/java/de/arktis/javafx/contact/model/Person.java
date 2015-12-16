@@ -57,6 +57,9 @@ public class Person {
         this.firstName.set(firstName);
     }
 
+    public String getFullName() {return firstName.get()+" " + lastName.get();
+    }
+
     public StringProperty firstNameProperty() {
         return firstName;
     }

@@ -198,23 +198,25 @@ public class PersonOverviewController {
         this.luceneQuery = new LuceneTestImplementation(searchRequest,new ContactMain());
         //luceneQuery.updateDocument();
         luceneQuery.searchEngine();
-        //this.foundPerson.setFirstName(luceneQuery.getFuzzyResults());
-        // setPersonDetails(this.foundPerson);
-        System.out.println(luceneQuery.getFuzzyResults());
+       // System.out.println(luceneQuery.getFuzzyResults());
+        this.foundPerson.setFirstName(luceneQuery.getFuzzyResults());
+        setPersonDetails(this.foundPerson);
+
 
     }
 
     private void setPersonDetails(Person foundPerson) {
+
         int i = 0;
         for (Person person : this.personTable.getItems() ) {
+                if (this.luceneQuery.getFuzzyResults().equals(personTable.getItems().get(i).getFullName())) {
+                    showPersonDetails(personTable.getItems().get(i));
+                    break;
+                } else {
+                    Person notFound = new Person("Nicht", "Gefunden");
+                    showPersonDetails(notFound);
+                }
             i++;
-            if (foundPerson.getFirstName().equals(personTable.getItems().get(i).getFirstName())) {
-                foundPerson = this.personTable.getItems().get(i);
-                showPersonDetails(foundPerson);
-            }
-            else{
-                System.out.println("next Person: " + this.personTable.getItems().get(i).getFirstName());
-            }
         }
 
     }

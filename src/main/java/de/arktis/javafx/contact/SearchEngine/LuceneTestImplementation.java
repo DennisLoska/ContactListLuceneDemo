@@ -132,8 +132,10 @@ public class LuceneTestImplementation {
     public String getFuzzyResults(){
 
         String foundName = this.d.get("title");
+
         if (foundName == null) {
-            System.out.println("Es wurde kein Kontakt gefunden.");
+            //System.out.println("Es wurde kein Kontakt gefunden.";
+            foundName = "Nicht Gefunden";
         }
         return foundName;
 
