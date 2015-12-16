@@ -59,7 +59,7 @@ public class ContactMain extends Application {
      * Returns the data as an observable list of Persons.
      * @return
      */
-    public ObservableList<Person> getPersonData() {
+    public ObservableList<Person>getPersonData() {
         return personData;
     }
 
@@ -120,7 +120,7 @@ public class ContactMain extends Application {
         return listStage;
     }
 
-    /**
+    /*
      * Shows the person overview inside the root layout.
      */
     public void showPersonOverview() {

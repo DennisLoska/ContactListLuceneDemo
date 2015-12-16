@@ -52,6 +52,10 @@ public class PersonOverviewController {
     private PersonOverviewController persOvCtrl;
     // Reference to the main application.
     private ContactMain contactMain;
+
+    private Person foundPerson = new Person();
+
+    private LuceneTestImplementation luceneQuery;
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -191,19 +195,36 @@ public class PersonOverviewController {
         request = new Searchrequest();
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
-        LuceneTestImplementation luceneQuery = new LuceneTestImplementation(searchRequest,new ContactMain());
+        this.luceneQuery = new LuceneTestImplementation(searchRequest,new ContactMain());
         //luceneQuery.updateDocument();
         luceneQuery.searchEngine();
+        //this.foundPerson.setFirstName(luceneQuery.getFuzzyResults());
+        // setPersonDetails(this.foundPerson);
+        System.out.println(luceneQuery.getFuzzyResults());
 
+    }
+
+    private void setPersonDetails(Person foundPerson) {
+        int i = 0;
+        for (Person person : this.personTable.getItems() ) {
+            i++;
+            if (foundPerson.getFirstName().equals(personTable.getItems().get(i).getFirstName())) {
+                foundPerson = this.personTable.getItems().get(i);
+                showPersonDetails(foundPerson);
+            }
+            else{
+                System.out.println("next Person: " + this.personTable.getItems().get(i).getFirstName());
+            }
+        }
 
     }
 
 
-    /**
-     * Is called by the main application to give a reference back to itself.
-     *
-     * @param contactMain
-     */
+        /**
+         * Is called by the main application to give a reference back to itself.
+         *
+         * @param contactMain
+         */
     public void setContactMain(ContactMain contactMain) {
         this.contactMain = contactMain;
 

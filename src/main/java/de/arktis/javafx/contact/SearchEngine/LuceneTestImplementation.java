@@ -19,6 +19,10 @@ public class LuceneTestImplementation {
     private final int ID = 7;
     private final String searchField;
     private ContactMain contactMain;
+    private String[] fuzzyResults;
+    private Document d = new Document();
+
+
 
     public LuceneTestImplementation(String searchField,ContactMain contactMain) throws IOException, ParseException {
         this.searchField = searchField;
@@ -35,8 +39,7 @@ public class LuceneTestImplementation {
     }
     */
 
-    public String[] searchEngine() throws IOException, ParseException {
-
+    public void searchEngine() throws IOException, ParseException {
 
 
         // create some index
@@ -67,7 +70,7 @@ public class LuceneTestImplementation {
                     + person.getLastName(), Field.Store.YES,
                     Field.Index.ANALYZED));
 
-            doc.add(new Field("name",person.getFirstName() + " "
+            doc.add(new Field("name", person.getFirstName() + " "
                     + person.getLastName(), Field.Store.YES,
                     Field.Index.ANALYZED));
 
@@ -104,31 +107,37 @@ public class LuceneTestImplementation {
 
         //parse query over multiple fields
         Query fuzzyQuery = new FuzzyQuery(new Term("title", this.searchField), 2);
-
+        System.out.println(this.searchField);
         int hitsPerPage = 10;
 
         IndexReader reader = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(reader);
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
-        String[] fuzzyResults = new String[hits.length];
+        this.fuzzyResults = new String[hits.length];
 
         //output
         for (int i = 0; i < hits.length; ++i) {
             int docId = hits[i].doc;
-            Document d = searcher.doc(docId);
+            this.d = searcher.doc(docId);
 
-            Document doc = new Document();
-            fuzzyResults[i] = d.get("title");
+            this.fuzzyResults[i] = this.d.get("title");
             System.out.println("Found " + hits.length + " hits.");
             System.out.println((i + 1) + ". " + d.get("title"));
-
 
         }
 
         reader.close();
+    }
 
-        return fuzzyResults;
+    public String getFuzzyResults(){
 
+        String foundName = this.d.get("title");
+        if (foundName == null) {
+            System.out.println("Es wurde kein Kontakt gefunden.");
+        }
+        return foundName;
+
+    }
         /* Für die 0-Anzeige
         Query q = new QueryParser("title", analyzer).parse(this.searchField);
 
@@ -143,12 +152,6 @@ public class LuceneTestImplementation {
             Document d = searcher.doc(docId);
             System.out.println((i + 1) + ". " + d.get("name") + ": "
                     + d.get("title"));
-
-
         }
         */
-
-
-    }
-
 }
