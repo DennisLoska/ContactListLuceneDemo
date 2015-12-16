@@ -205,7 +205,7 @@ public class PersonOverviewController {
 
     }
 
-    private void setPersonDetails(Person foundPerson) {
+    public Person setPersonDetails(Person foundPerson) {
 
         int i = 0;
         for (Person person : this.personTable.getItems() ) {
@@ -218,6 +218,8 @@ public class PersonOverviewController {
                 }
             i++;
         }
+
+        return personTable.getItems().get(i);
 
     }
 

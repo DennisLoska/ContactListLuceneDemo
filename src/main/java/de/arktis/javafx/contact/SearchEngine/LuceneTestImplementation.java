@@ -1,6 +1,8 @@
 package de.arktis.javafx.contact.SearchEngine;
 
 import de.arktis.javafx.contact.ContactMain;
+import de.arktis.javafx.contact.controller.PersonEditDialogController;
+import de.arktis.javafx.contact.controller.PersonOverviewController;
 import de.arktis.javafx.contact.model.Person;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -21,59 +23,61 @@ public class LuceneTestImplementation {
     private ContactMain contactMain;
     private String[] fuzzyResults;
     private Document d = new Document();
+    private PersonOverviewController personOvctrl = new PersonOverviewController();
+
+    private Document doc;
+    private IndexWriter indWriter;
+    private IndexReader reader;
+    private IndexWriterConfig indexConfig;
+    private IndexWriterConfig indexUpdateConfig;
 
 
-
-    public LuceneTestImplementation(String searchField,ContactMain contactMain) throws IOException, ParseException {
+    public LuceneTestImplementation(String searchField, ContactMain contactMain) throws IOException, ParseException {
         this.searchField = searchField;
         this.contactMain = contactMain;
     }
 
-    /*
-    public void updateDocument() throws IOException {
+    public void updateDocument(IndexWriter indWriter, Document doc, IndexReader reader) throws IOException {
+
+        this.indWriter = indWriter;
+        this.doc = doc;
+        this.reader = reader;
+       // Person tmp = personOvctrl.setPersonDetails(Person );
 
         indWriter.tryDeleteDocument(reader,this.ID);
-        indWriter.updateDocument(new Term("title"),doc);
+        indWriter.updateDocument(new Term("title"),doc); // hier die Person rein //vden namen
         indWriter.close();
 
     }
-    */
 
     public void searchEngine() throws IOException, ParseException {
-
-
         // create some index
-        // we could also create an index in our ram ...
+        // we could also create an index in our ram ..
         // Directory index = new RAMDirectory();
         StandardAnalyzer analyzer = new StandardAnalyzer();
-        IndexWriterConfig indexConfig = new IndexWriterConfig(analyzer);
+        this.indexConfig = new IndexWriterConfig(analyzer);
+        this.indexUpdateConfig = new IndexWriterConfig(analyzer);
         Directory index = new RAMDirectory();
-        IndexWriter indWriter = null;
 
         //Path path = new Paths();
         //index = FSDirectory.open(path);
+
         try {
-            indWriter = new IndexWriter(index, indexConfig);
+            this.indWriter = new IndexWriter(index, indexConfig);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //Mit jeder Query wird erneut ein Index angelegt, um Veränderungen abzufangen
         for (Person person : contactMain.getPersonData()) {
-
             System.out.println("indexing " + person.getFirstName() + " "
                     + person.getLastName());
-
-            Document doc = new Document();
-
+            this.doc = new Document();
             doc.add(new Field("title", person.getFirstName() + " "
                     + person.getLastName(), Field.Store.YES,
                     Field.Index.ANALYZED));
-
             doc.add(new Field("name", person.getFirstName() + " "
                     + person.getLastName(), Field.Store.YES,
                     Field.Index.ANALYZED));
-
             try {
                 indWriter.addDocument(doc);
             } catch (IOException e) {
@@ -81,26 +85,12 @@ public class LuceneTestImplementation {
             }
         }
 
-        // loop and index some random data
-        for (int i = 1; i < 40000; i++) {
-            Document doc = new Document();
-            doc.add(new Field("title", "xyz" + i, Field.Store.YES,
-                    Field.Index.ANALYZED));
-            doc.add(new Field("name", "" + i, Field.Store.YES,
-                    Field.Index.ANALYZED));
-
-            try {
-                indWriter.addDocument(doc);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
         try {
             indWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         System.out.println("\nIndex erstellt:");
         System.out.println(this.contactMain.getPersonData().size() + " Personen insgesamt. \n");
@@ -109,8 +99,9 @@ public class LuceneTestImplementation {
         Query fuzzyQuery = new FuzzyQuery(new Term("title", this.searchField), 2);
         System.out.println(this.searchField);
         int hitsPerPage = 10;
+        //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen
+        this.reader = DirectoryReader.open(index);
 
-        IndexReader reader = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(reader);
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
         this.fuzzyResults = new String[hits.length];
@@ -123,16 +114,22 @@ public class LuceneTestImplementation {
             this.fuzzyResults[i] = this.d.get("title");
             System.out.println("Found " + hits.length + " hits.");
             System.out.println((i + 1) + ". " + d.get("title"));
+        }
+       // reader.close();
 
+        try {
+            this.indWriter = new IndexWriter(index, indexUpdateConfig);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        updateDocument(indWriter, doc,reader);
         reader.close();
     }
 
-    public String getFuzzyResults(){
+    public String getFuzzyResults() {
 
         String foundName = this.d.get("title");
-
         if (foundName == null) {
             //System.out.println("Es wurde kein Kontakt gefunden.";
             foundName = "Nicht Gefunden";
@@ -140,20 +137,5 @@ public class LuceneTestImplementation {
         return foundName;
 
     }
-        /* Für die 0-Anzeige
-        Query q = new QueryParser("title", analyzer).parse(this.searchField);
 
-        // searching ...
-        TopDocs docs = searcher.search(q, hitsPerPage);
-        ScoreDoc[] hits2 = docs.scoreDocs;
-
-        // output results
-        System.out.println("Found " + hits2.length + " hits.");
-        for (int i = 0; i < hits2.length; ++i) {
-            int docId = hits[i].doc;
-            Document d = searcher.doc(docId);
-            System.out.println((i + 1) + ". " + d.get("name") + ": "
-                    + d.get("title"));
-        }
-        */
 }
