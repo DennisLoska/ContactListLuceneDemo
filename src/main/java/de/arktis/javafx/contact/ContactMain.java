@@ -36,7 +36,6 @@ public class ContactMain extends Application {
     private Stage primaryStage;
     private Stage listStage;
     private BorderPane rootLayout;
-
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
     /**
@@ -54,7 +53,6 @@ public class ContactMain extends Application {
         personData.add(new Person("Stefan", "Meier"));
         personData.add(new Person("Martin", "Mueller"));
     }
-
     /**
      * Returns the data as an observable list of Persons.
      * @return
@@ -63,6 +61,10 @@ public class ContactMain extends Application {
         return personData;
     }
 
+    /**
+     * Initializes the root layout and tries to load the last opened
+     * person file.
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -72,13 +74,8 @@ public class ContactMain extends Application {
 
         showPersonOverview();
     }
-
     /**
      * Initializes the root layout.
-     */
-    /**
-     * Initializes the root layout and tries to load the last opened
-     * person file.
      */
     public void initRootLayout() {
         try {
@@ -107,7 +104,6 @@ public class ContactMain extends Application {
             loadPersonDataFromFile(file);
         }
     }
-
     /**
      * Returns the main stage.
      * @return
@@ -141,8 +137,6 @@ public class ContactMain extends Application {
             e.printStackTrace();
         }
     }
-
-
     /**
      * Opens a dialog to edit details for the specified person. If the user
      * clicks OK, the changes are saved into the provided person object and true
@@ -180,7 +174,6 @@ public class ContactMain extends Application {
             return false;
         }
     }
-
     /**
      * Returns the person file preference, i.e. the file that was last opened.
      * The preference is read from the OS specific registry. If no such
@@ -197,7 +190,6 @@ public class ContactMain extends Application {
             return null;
         }
     }
-
     /**
      * Sets the file path of the currently loaded file. The path is persisted in
      * the OS specific registry.
@@ -218,9 +210,6 @@ public class ContactMain extends Application {
             primaryStage.setTitle("AddressApp");
         }
     }
-
-
-
     /**
      * Loads person data from the specified file. The current person data will
      * be replaced.
@@ -251,7 +240,6 @@ public class ContactMain extends Application {
             alert.showAndWait();
         }
     }
-
     /**
      * Saves the current person data to the specified file.
      *
@@ -282,7 +270,6 @@ public class ContactMain extends Application {
             alert.showAndWait();
         }
     }
-
     /**
      * Opens a dialog to show birthday statistics.
      */
@@ -309,9 +296,9 @@ public class ContactMain extends Application {
             e.printStackTrace();
         }
     }
-
-    public void showSearchPopup(){
     //TODO 2. PopUp-Implementierung
+    public void showSearchPopup(){
+
         try {
             // Load the fxml file and create a new stage for the popup.
             FXMLLoader loader = new FXMLLoader();
@@ -330,18 +317,13 @@ public class ContactMain extends Application {
             e.printStackTrace();
         }
     }
-
-    //TODO Popup
+    //TODO Popup schließen bei ENTER-Wahl der PErson aus dem Dropdown-Menü
     public void closeSearchPopup(){
        if(listStage != null) {
            this.listStage.close();
        } else {
-
-       }
-
-
+         }
     }
-
 
     public static void main(String[] args) throws IOException, ParseException {
 

@@ -44,18 +44,15 @@ public class PersonOverviewController {
 
     @FXML
     private ListView listView;
-
     private Searchrequest request;
     //private LuceneSearch lucene;
     private LuceneIndexSearcher iSearcher;
-
     private PersonOverviewController persOvCtrl;
     // Reference to the main application.
     private ContactMain contactMain;
-
     private Person foundPerson = new Person();
-
     private LuceneTestImplementation luceneQuery;
+
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -67,6 +64,19 @@ public class PersonOverviewController {
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
+    @FXML
+    private void initialize() {
+        // Initialize the person table with the two columns.
+        firstNameColumn.setCellValueFactory(
+                cellData -> cellData.getValue().firstNameProperty());
+        lastNameColumn.setCellValueFactory(
+                cellData -> cellData.getValue().lastNameProperty());
+        // Clear person details.
+        showPersonDetails(null);
+        // Listen for selection changes and show the person details when changed.
+        personTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+    }
 
 
     /**
@@ -97,23 +107,6 @@ public class PersonOverviewController {
         }
     }
 
-
-    @FXML
-    private void initialize() {
-        // Initialize the person table with the two columns.
-        firstNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().lastNameProperty());
-
-        // Clear person details.
-           showPersonDetails(null);
-
-        // Listen for selection changes and show the person details when changed.
-        personTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showPersonDetails(newValue));
-    }
-
     /**
      * Called when the user clicks on the delete button.
      */
@@ -131,12 +124,12 @@ public class PersonOverviewController {
             alert.setTitle("No Selection");
             alert.setHeaderText("No Person Selected");
             alert.setContentText("Please select a person in the table.");
-
             alert.showAndWait();
         }
 
 
     }
+
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
@@ -154,7 +147,6 @@ public class PersonOverviewController {
      * Called when the user clicks the edit button. Opens a dialog to edit
      * details for the selected person.
      */
-
     @FXML
     private void handleEditPerson() {
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
@@ -171,7 +163,6 @@ public class PersonOverviewController {
             alert.setTitle("No Selection");
             alert.setHeaderText("No Person Selected");
             alert.setContentText("Please select a person in the table.");
-
             alert.showAndWait();
         }
     }
@@ -180,14 +171,15 @@ public class PersonOverviewController {
     private void handleSearchEnter(KeyEvent event) throws IOException, ParseException {
         if (event.getCode() == KeyCode.ENTER) {
             handleSearch();
-           // contactMain.closeSearchPopup();
+            //contactMain.closeSearchPopup();
+            //contactMain.showSearchPopup();
 
         }
     }
 
     /*
      *Aktion, wenn der Such-Button angeklickt wird.
-     *TODO Nach Lucene übergeben
+     *
      */
     @FXML
     private void handleSearch() throws IOException, ParseException {
@@ -195,48 +187,45 @@ public class PersonOverviewController {
         request = new Searchrequest();
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
-        this.luceneQuery = new LuceneTestImplementation(searchRequest,new ContactMain());
-        //luceneQuery.updateDocument();
+        this.luceneQuery = new LuceneTestImplementation(searchRequest, new ContactMain());
         luceneQuery.searchEngine();
-       // System.out.println(luceneQuery.getFuzzyResults());
         this.foundPerson.setFirstName(luceneQuery.getFuzzyResults());
         setPersonDetails(this.foundPerson);
-
 
     }
 
     public void setPersonDetails(Person foundPerson) {
 
         int i = 0;
-        for (Person person : this.personTable.getItems() ) {
-                if (this.luceneQuery.getFuzzyResults().equals(personTable.getItems().get(i).getFullName())) {
-                    showPersonDetails(personTable.getItems().get(i));
-                    break;
-                } else {
-                    Person notFound = new Person("Nicht", "Gefunden");
-                    showPersonDetails(notFound);
-                }
+        for (Person person : this.personTable.getItems()) {
+            if (this.luceneQuery.getFuzzyResults().equals(personTable.getItems().get(i).getFullName())) {
+                this.foundPerson = personTable.getItems().get(i);
+                showPersonDetails(this.foundPerson);
+                break;
+            } else {
+                this.foundPerson = new Person("Nicht", "Gefunden");
+                showPersonDetails(this.foundPerson);
+            }
             i++;
         }
-
-       // return personTable.getItems().get(i);
-
     }
 
+    public Person getFoundPerson() {
+        return this.foundPerson;
+    }
 
-        /**
-         * Is called by the main application to give a reference back to itself.
-         *
-         * @param contactMain
-         */
+    /**
+     * Is called by the main application to give a reference back to itself.
+     *
+     * @param contactMain
+     */
     public void setContactMain(ContactMain contactMain) {
         this.contactMain = contactMain;
-
         // Add observable list data to the table
         personTable.setItems(contactMain.getPersonData());
     }
 
-    public ContactMain getContactMain(){
+    public ContactMain getContactMain() {
         return this.contactMain;
     }
 }
