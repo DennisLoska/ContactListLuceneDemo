@@ -38,7 +38,6 @@ public class ContactMain extends Application {
     private Stage listStage;
     private BorderPane rootLayout;
     private LuceneTestImplementation luceneEngine;
-    //TODO ObservableList Listener einbauen um Veränderungen der gegebenen Kontakte zu indexieren
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
     /**

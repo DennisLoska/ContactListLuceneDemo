@@ -31,8 +31,6 @@ public class LuceneTestImplementation {
     private IndexWriterConfig indexUpdateConfig;
     private PersonOverviewController persOvCtrl;
 
-
-    //TODO multiple Konstruktoren ermöglichen
     public LuceneTestImplementation(){
 
     };
@@ -55,7 +53,6 @@ public class LuceneTestImplementation {
         addedDoc.add(new Field("title", found.getFirstName() + " "
                 + found.getLastName(), Field.Store.YES,
                 Field.Index.ANALYZED));
-
         indWriter.tryDeleteDocument(reader,this.ID);
         indWriter.updateDocument(new Term("title", "test"),doc);
         indWriter.close();
