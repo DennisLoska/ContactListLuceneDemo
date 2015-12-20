@@ -21,11 +21,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TreeView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.lucene.queryparser.classic.ParseException;
+import sun.reflect.generics.tree.Tree;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -305,14 +309,20 @@ public class ContactMain extends Application {
             // Load the fxml file and create a new stage for the popup.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ContactMain.class.getResource("/de/arktis/javafx/contact/view/SearchPopup.fxml"));
-            ListView  page = (ListView) loader.load();
+            TreeView<Tree> page = loader.load();
             this.listStage = new Stage();
             listStage.initModality(Modality.APPLICATION_MODAL);
             listStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             listStage.setScene(scene);
-
             listStage.show();
+
+            /*
+            if(listStage != null && event.getCode() == KeyCode.ENTER) {
+                closeSearchPopup();
+            } else {
+            }
+            */
 
 
         } catch (IOException e) {
@@ -321,11 +331,8 @@ public class ContactMain extends Application {
     }
     //TODO Popup schließen bei ENTER-Wahl der Person aus dem Dropdown-Menü
     public void closeSearchPopup(){
-       if(listStage != null) {
            this.listStage.close();
-       } else {
-         }
-    }
+        }
 
     public static void main(String[] args) throws IOException, ParseException {
 

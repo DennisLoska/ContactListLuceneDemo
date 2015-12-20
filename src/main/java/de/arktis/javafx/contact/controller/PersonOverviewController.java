@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.apache.lucene.queryparser.classic.ParseException;
 
+import java.beans.EventHandler;
 import java.io.IOException;
 
 public class PersonOverviewController {
@@ -167,6 +168,8 @@ public class PersonOverviewController {
         }
     }
 
+    //TODO wieder einbinden
+
     @FXML
     private void handleSearchEnter(KeyEvent event) throws IOException, ParseException {
         if (event.getCode() == KeyCode.ENTER) {
@@ -176,6 +179,20 @@ public class PersonOverviewController {
 
         }
     }
+
+
+/*
+    public void startSearch(KeyEvent event){
+
+        searchField.onKeyTypedProperty(event);
+
+        if(listStage != null && event.getCode() == KeyCode.ENTER) {
+            this.listStage.close();
+        } else {
+        }
+
+   }
+ */
 
     /*
      *Aktion, wenn der Such-Button angeklickt wird.
@@ -190,6 +207,8 @@ public class PersonOverviewController {
         this.luceneQuery = new LuceneTestImplementation(searchRequest, new ContactMain());
         luceneQuery.searchEngine();
         setPersonDetails(this.foundPerson);
+
+        contactMain.showSearchPopup();
 
     }
 
@@ -211,7 +230,7 @@ public class PersonOverviewController {
         }
     }
 
-
+    //TODO Test-Listener oder den in der PersonListWrapper-Klasse entfernen
     public void contactListener(){
 
         contactMain.getPersonData().addListener(
