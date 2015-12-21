@@ -15,8 +15,11 @@ import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.ContactMain;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import org.apache.lucene.queryparser.classic.ParseException;
 
+import javax.swing.event.ChangeListener;
+import javax.swing.text.html.*;
 import java.beans.EventHandler;
 import java.io.IOException;
 
@@ -44,11 +47,8 @@ public class PersonOverviewController {
     @FXML
     private TextField searchField;
 
-    @FXML
-    private ListView listView;
     private Searchrequest request;
-    private LuceneIndexSearcher iSearcher;
-    private PersonOverviewController persOvCtrl;
+
     // Reference to the main application.
     private ContactMain contactMain;
     private Person foundPerson = new Person();
@@ -66,7 +66,7 @@ public class PersonOverviewController {
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
         // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(
                 cellData -> cellData.getValue().firstNameProperty());
@@ -76,7 +76,23 @@ public class PersonOverviewController {
         showPersonDetails(null);
         // Listen for selection changes and show the person details when changed.
         personTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+                (observable, oldValue, newValue) -> {
+                    showPersonDetails(newValue);
+
+                    /* updateDocument-Methode noch nicht fertig
+                    try {
+                        try {
+                            handleSearch();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        luceneQuery.updateDocument();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                   */
+                });
+
     }
 
 
@@ -128,7 +144,6 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
 
-
     }
 
     /**
@@ -168,31 +183,29 @@ public class PersonOverviewController {
         }
     }
 
-    //TODO wieder einbinden
+    /*
+     *
+     * Startt Suche, sobald erster Buchstabe getippt wird.
+     * Noch kein Popup daher auskommentiert
+     */
+    @FXML
+    private void startSearch(KeyEvent event) throws IOException, ParseException {
+            handleSearch();
+            //contactMain.showSearchPopup(event);
+        }
 
+    /*
+     *startet die Suche auch, wenn Enter gedrückt wird und schließt das Popup
+     *
+     */
     @FXML
     private void handleSearchEnter(KeyEvent event) throws IOException, ParseException {
         if (event.getCode() == KeyCode.ENTER) {
             handleSearch();
-            //contactMain.closeSearchPopup();
-            //contactMain.showSearchPopup();
+            contactMain.closeSearchPopup();
 
         }
     }
-
-
-/*
-    public void startSearch(KeyEvent event){
-
-        searchField.onKeyTypedProperty(event);
-
-        if(listStage != null && event.getCode() == KeyCode.ENTER) {
-            this.listStage.close();
-        } else {
-        }
-
-   }
- */
 
     /*
      *Aktion, wenn der Such-Button angeklickt wird.
@@ -204,14 +217,18 @@ public class PersonOverviewController {
         request = new Searchrequest();
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
+        if (searchRequest == null){
+            searchRequest = "Null Catcher";
+        }
         this.luceneQuery = new LuceneTestImplementation(searchRequest, new ContactMain());
         luceneQuery.searchEngine();
         setPersonDetails(this.foundPerson);
 
-        contactMain.showSearchPopup();
-
     }
 
+    /*
+     *Gleicht die Kontaktliste anhand des vollen Namens ab.
+     */
     public void setPersonDetails(Person foundPerson) {
 
         this.foundPerson = foundPerson;
@@ -228,25 +245,6 @@ public class PersonOverviewController {
             }
             i++;
         }
-    }
-
-    //TODO Test-Listener oder den in der PersonListWrapper-Klasse entfernen
-    public void contactListener(){
-
-        contactMain.getPersonData().addListener(
-                new ListChangeListener<Person>() {
-                    @Override
-                    public void onChanged(Change<? extends Person> change) {
-                        try {
-                            luceneQuery.updateDocument();
-                            System.out.println("Gute Nacht.");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-        );
     }
 
     public Person getFoundPerson() {

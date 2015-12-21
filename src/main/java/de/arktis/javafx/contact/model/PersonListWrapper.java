@@ -37,35 +37,6 @@ public class PersonListWrapper {
         this.persons = persons;
     }
 
-    public ObservableList<Person> getPersonData(){
-        return contactMain.getPersonData();
     }
-
-    public void listListener(){
-
-        personData = contactMain.getPersonData();
-
-        personData.addListener(new ListChangeListener<Person>() {
-            @Override
-            public void onChanged(Change<? extends Person> c) {
-                try {
-                    luceneEngine.updateDocument();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
-
-    }
-
-
-
-
-
-
-
-}
 
 

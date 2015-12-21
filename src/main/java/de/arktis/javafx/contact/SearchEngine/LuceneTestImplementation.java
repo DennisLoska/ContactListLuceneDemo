@@ -3,8 +3,6 @@ package de.arktis.javafx.contact.SearchEngine;
 import de.arktis.javafx.contact.ContactMain;
 import de.arktis.javafx.contact.controller.PersonOverviewController;
 import de.arktis.javafx.contact.model.Person;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -19,7 +17,7 @@ import java.io.IOException;
 
 public class LuceneTestImplementation {
 
-    private final int ID = 7;
+    private int docId;
     private String searchField;
     private ContactMain contactMain;
     private String[] fuzzyResults;
@@ -40,9 +38,13 @@ public class LuceneTestImplementation {
         this.contactMain = contactMain;
     };
 
-    //TODO Die Update-Funktion implementieren, sodass gelöschte , bearbeitete und neu hinzugefügte Kontakte indexiert werden
+    /*
+     *TODO Die Update-Funktion implementieren, sodass gelöschte , bearbeitete und neu hinzugefügte Kontakte indexiert werden
+     * Diese Methode funktioniert noch nicht.
+     */
     public void updateDocument() throws IOException {
 
+        System.out.println("updating...\n");
         this.doc = null;
         indWriter.addDocument(doc);
 
@@ -53,12 +55,25 @@ public class LuceneTestImplementation {
         addedDoc.add(new Field("title", found.getFirstName() + " "
                 + found.getLastName(), Field.Store.YES,
                 Field.Index.ANALYZED));
-        indWriter.tryDeleteDocument(reader,this.ID);
+        indWriter.tryDeleteDocument(reader,this.docId);
         indWriter.updateDocument(new Term("title", "test"),doc);
         indWriter.close();
 
     }
 
+    /*
+     * 1.Es wird im for-Loop die Kontaktliste durchlaufen und alle Namen der Personen
+     *   in einem erstellten Inde gespeichert. Pro Person wurden zwei Felder "title" und
+     *   "name" erstellt, wobei in diesem Falle auch eines gereicht hätte.
+     *   "title" ist von Vorteil wenn z.b. zwei Personen den gleichen Namen haben. Man
+     *   könnte z.B. mit einer person_ID die PErson einzigartig machen und über das Feld
+     *   "name" den Namen bekommen.
+     * 2.Es wird eine FuzzyQuery (ungenaue Abfrage) Erstellt. Die Parameter sind das
+     *   abzufragende Feld "title" (alternativ "name") und der eingegebene Suchbegriff,
+      *  welcher mit "this.searchfield" (Zeile 119) übergeben wird.
+     * 3.Gibt die gefundenen Personen anhand der DocID aus. Beginnend bei 0 bzw 1 (Array)
+     *   1. , 2. , 3. Person usw.
+     */
     public void searchEngine() throws IOException, ParseException {
         // create some index
         // we could also create an index in our ram ..
@@ -74,6 +89,7 @@ public class LuceneTestImplementation {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //1.
         for (Person person : contactMain.getPersonData()) {
             System.out.println("indexing " + person.getFirstName() + " "
                     + person.getLastName());
@@ -90,18 +106,21 @@ public class LuceneTestImplementation {
                 e.printStackTrace();
             }
         }
+
         try {
             indWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         System.out.println("\nIndex erstellt:");
         System.out.println(this.contactMain.getPersonData().size() + " Personen insgesamt. \n");
 
-        //parse query over multiple fields
+        //2. parse query over multiple fields
         Query fuzzyQuery = new FuzzyQuery(new Term("title", this.searchField), 2);
         System.out.println(this.searchField);
         int hitsPerPage = 10;
+
         //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen
         this.reader = DirectoryReader.open(index);
 
@@ -109,30 +128,25 @@ public class LuceneTestImplementation {
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
         this.fuzzyResults = new String[hits.length];
 
-        //output
+        //3. output
         for (int i = 0; i < hits.length; ++i) {
-            int docId = hits[i].doc;
+            this.docId = hits[i].doc;
             this.d = searcher.doc(docId);
 
             this.fuzzyResults[i] = this.d.get("title");
             System.out.println("Found " + hits.length + " hits.");
             System.out.println((i + 1) + ". " + d.get("title"));
         }
-       // reader.close();
-
-        try {
-            this.indWriter = new IndexWriter(index, indexUpdateConfig);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-       //updateDocument(indWriter, doc,reader);
         reader.close();
     }
 
+    /*
+     * Gibt den vollen Namen der gefunden Person zurück.
+     */
     public String getFuzzyResults() {
         String foundName = this.d.get("title");
         if (foundName == null) {
-            //System.out.println("Es wurde kein Kontakt gefunden.";
+            //System.out.println("Es wurde kein Kontakt gefunden.");
             foundName = "Nicht Gefunden";
         }
         return foundName;

@@ -302,8 +302,9 @@ public class ContactMain extends Application {
             e.printStackTrace();
         }
     }
+
     //TODO PopUp-Implementierung mit Dropdown-Menü
-    public void showSearchPopup(){
+    public void showSearchPopup(KeyEvent event){
 
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -317,22 +318,19 @@ public class ContactMain extends Application {
             listStage.setScene(scene);
             listStage.show();
 
-            /*
-            if(listStage != null && event.getCode() == KeyCode.ENTER) {
-                closeSearchPopup();
-            } else {
-            }
-            */
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    //TODO Popup schließen bei ENTER-Wahl der Person aus dem Dropdown-Menü
+
     public void closeSearchPopup(){
+        if (listStage != null){
            this.listStage.close();
         }
+        else {
+            System.out.println("Kein Fenster offen.");
+        }
+    }
 
     public static void main(String[] args) throws IOException, ParseException {
 
