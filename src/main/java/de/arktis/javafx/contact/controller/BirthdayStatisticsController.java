@@ -15,7 +15,6 @@ import de.arktis.javafx.contact.model.Person;
         import javafx.collections.FXCollections;
         import javafx.collections.ObservableList;
         import javafx.fxml.FXML;
-        import javafx.scene.chart.BarChart;
         import javafx.scene.chart.CategoryAxis;
         import javafx.scene.chart.XYChart;
 

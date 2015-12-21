@@ -1,10 +1,5 @@
 package de.arktis.javafx.contact;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.prefs.Preferences;
-
-//import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.controller.BirthdayStatisticsController;
 import de.arktis.javafx.contact.controller.PersonEditDialogController;
@@ -12,17 +7,13 @@ import de.arktis.javafx.contact.controller.PersonOverviewController;
 import de.arktis.javafx.contact.controller.RootLayoutController;
 import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.model.PersonListWrapper;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +25,9 @@ import sun.reflect.generics.tree.Tree;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+import java.util.prefs.Preferences;
 
 
 public class ContactMain extends Application {

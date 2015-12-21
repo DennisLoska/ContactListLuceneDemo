@@ -4,23 +4,16 @@ package de.arktis.javafx.contact.controller;
  * Created by Pati on 09.12.2015.
  */
 
-import de.arktis.javafx.contact.SearchEngine.LuceneIndexSearcher;
 import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.model.Searchrequest;
 import de.arktis.javafx.contact.util.DateUtil;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import de.arktis.javafx.contact.model.Person;
 import de.arktis.javafx.contact.ContactMain;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import org.apache.lucene.queryparser.classic.ParseException;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.text.html.*;
-import java.beans.EventHandler;
 import java.io.IOException;
 
 public class PersonOverviewController {
@@ -182,9 +175,7 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
     }
-
     /*
-     *
      * Startt Suche, sobald erster Buchstabe getippt wird.
      * Noch kein Popup daher auskommentiert
      */
@@ -206,7 +197,6 @@ public class PersonOverviewController {
 
         }
     }
-
     /*
      *Aktion, wenn der Such-Button angeklickt wird.
      *
@@ -225,7 +215,6 @@ public class PersonOverviewController {
         setPersonDetails(this.foundPerson);
 
     }
-
     /*
      *Gleicht die Kontaktliste anhand des vollen Namens ab.
      */
@@ -250,7 +239,6 @@ public class PersonOverviewController {
     public Person getFoundPerson() {
         return this.foundPerson;
     }
-
     /**
      * Is called by the main application to give a reference back to itself.
      *
