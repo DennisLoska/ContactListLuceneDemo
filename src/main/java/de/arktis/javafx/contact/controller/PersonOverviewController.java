@@ -4,6 +4,8 @@ package de.arktis.javafx.contact.controller;
  * Created by Pati on 09.12.2015.
  */
 
+import de.arktis.javafx.contact.SearchEngine.LuceneIndex;
+import de.arktis.javafx.contact.SearchEngine.LuceneIndexSearcher;
 import de.arktis.javafx.contact.SearchEngine.LuceneTestImplementation;
 import de.arktis.javafx.contact.model.Searchrequest;
 import de.arktis.javafx.contact.util.DateUtil;
@@ -45,7 +47,8 @@ public class PersonOverviewController {
     // Reference to the main application.
     private ContactMain contactMain;
     private Person foundPerson = new Person();
-    private LuceneTestImplementation luceneQuery;
+    private LuceneIndexSearcher luceneQuery;
+    private LuceneIndex luceneIndex;
 
     /**
      * The constructor.
@@ -210,8 +213,12 @@ public class PersonOverviewController {
         if (searchRequest == null){
             searchRequest = "Null Catcher";
         }
-        this.luceneQuery = new LuceneTestImplementation(searchRequest, new ContactMain());
-        luceneQuery.searchEngine();
+        this.luceneQuery = new LuceneIndexSearcher(searchRequest, new ContactMain());
+        this.luceneIndex = new LuceneIndex();
+
+        luceneIndex.createDirectory();
+        luceneIndex.createIndex();
+        luceneQuery.searchIndex();
         setPersonDetails(this.foundPerson);
 
     }

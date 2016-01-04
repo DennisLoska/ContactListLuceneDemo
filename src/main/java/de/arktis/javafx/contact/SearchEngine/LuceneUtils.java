@@ -1,52 +1,76 @@
-/*
-
 package de.arktis.javafx.contact.SearchEngine;
 
-import org.apache.lucene.analysis.Analyzer;
+import de.arktis.javafx.contact.controller.PersonOverviewController;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
+import org.apache.lucene.store.RAMDirectory;
 
-import java.io.File;
 import java.io.IOException;
 
 public class LuceneUtils {
 
-    private LuceneUtils lucy = new LuceneUtils();
-    private String indexDir = "/de/arktis/javafx/contact/model/testIndex";
+    private static LuceneUtils utilsInstance = null;
+    private int docID;
+    private Document doc = new Document();
+    private IndexWriterConfig indexConfig = new IndexWriterConfig(new StandardAnalyzer());
+    private Directory index = new RAMDirectory();
+    private IndexReader reader;
+    private IndexSearcher searcher;
+    private String[] fuzzyResults;
+    private IndexWriter indWriter;
 
-    //Konstruktor
-    public LuceneUtils(){
-
+    protected LuceneUtils() {
+        // Exists only to defeat instantiation.
     }
 
-    public void createIndex() throws Exception {
-
-        boolean create = true;
-        File indexDirFile = new File(this.indexDir);
-        if (indexDirFile.exists() && indexDirFile.isDirectory()) {
-            create = false;
+    public static LuceneUtils getInstance() {
+        if(utilsInstance == null) {
+            utilsInstance = new LuceneUtils();
         }
-
-        Directory dir = FSDirectory.open(indexDirFile);
-        Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);
-        IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_40, analyzer);
-
-        if (create) {
-            // Create a new index in the directory, removing any
-            // previously indexed documents:
-            iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
-        }
-
-        IndexWriter writer = new IndexWriter(dir, iwc);
-        writer.commit();
-        writer.close(true);
+        return utilsInstance;
     }
+
+    public int getDocID() {
+        return docID;
+    }
+
+    public void setDocID(int docID) {
+        this.docID = docID;
+    }
+
+    public Document getDoc() {
+        return doc;
+    }
+
+    public IndexWriterConfig getIndexConfig() {
+        return indexConfig;
+    }
+
+    public Directory getIndex() {
+        return index;
+    }
+
+    public IndexReader getReader() {
+        return reader;
+    }
+
+    public IndexWriter getIndWriter() {
+        return indWriter;
+    }
+
+    public IndexSearcher getSearcher() {
+        return searcher;
+    }
+
+    public String[] getFuzzyResults() {
+        return fuzzyResults;
+    }
+
 
 }
-*/
+

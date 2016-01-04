@@ -42,6 +42,8 @@ public class LuceneTestImplementation {
      *TODO Die Update-Funktion implementieren, sodass gelöschte , bearbeitete und neu hinzugefügte Kontakte indexiert werden
      * Diese Methode funktioniert noch nicht.
      */
+
+    /*
     public void updateDocument() throws IOException {
 
         System.out.println("updating...\n");
@@ -60,6 +62,8 @@ public class LuceneTestImplementation {
         indWriter.close();
 
     }
+*/
+
 
     /*
      * 1.Es wird im for-Loop die Kontaktliste durchlaufen und alle Namen der Personen
@@ -78,6 +82,7 @@ public class LuceneTestImplementation {
         // create some index
         // we could also create an index in our ram ..
         // Directory index = new RAMDirectory();
+        // createDirectory
         StandardAnalyzer analyzer = new StandardAnalyzer();
         this.indexConfig = new IndexWriterConfig(analyzer);
         this.indexUpdateConfig = new IndexWriterConfig(analyzer);
@@ -89,7 +94,8 @@ public class LuceneTestImplementation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //1.
+
+        //1. createIndex
         for (Person person : contactMain.getPersonData()) {
             System.out.println("indexing " + person.getFirstName() + " "
                     + person.getLastName());
@@ -143,6 +149,8 @@ public class LuceneTestImplementation {
     /*
      * Gibt den vollen Namen der gefunden Person zurück.
      */
+
+    /*
     public String getFuzzyResults() {
         String foundName = this.d.get("title");
         if (foundName == null) {
@@ -151,5 +159,5 @@ public class LuceneTestImplementation {
         }
         return foundName;
     }
-
+   */
 }

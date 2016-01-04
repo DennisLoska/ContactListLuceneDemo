@@ -35,7 +35,6 @@ public class ContactMain extends Application {
     private Stage primaryStage;
     private Stage listStage;
     private BorderPane rootLayout;
-    private LuceneTestImplementation luceneEngine;
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
     /**
