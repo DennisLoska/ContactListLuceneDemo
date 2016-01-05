@@ -15,7 +15,7 @@ import java.io.IOException;
 public class LuceneIndexSearcher {
 
     private String searchRequest;
-    private Document d = new Document();
+    private Document doc = LuceneIndex.getDoc();
 
 
     public LuceneIndexSearcher(String searchRequest) {
@@ -27,7 +27,7 @@ public class LuceneIndexSearcher {
         System.out.println(this.searchRequest);
         int hitsPerPage = 10;
         //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen  LuceneUtils.getInstance().getIndex()
-        IndexReader reader = DirectoryReader.open(LuceneUtils.getInstance().getIndex());
+        IndexReader reader = DirectoryReader.open(LuceneIndex.getIndex());
         IndexSearcher searcher = new IndexSearcher(reader);
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
         String[] fuzzyResults = new String[hits.length];
@@ -35,16 +35,16 @@ public class LuceneIndexSearcher {
         for (int i = 0; i < hits.length; ++i) {
             int docID = hits[i].doc;
             LuceneUtils.getInstance().setDocID(docID);
-            this.d = searcher.doc(docID);
-            fuzzyResults[i] = this.d.get("title");
+            this.doc = searcher.doc(docID);
+            fuzzyResults[i] = this.doc.get("title");
             System.out.println("Found " + hits.length + " hits.");
-            System.out.println((i + 1) + ". " + d.get("title"));
+            System.out.println((i + 1) + ". " + doc.get("title"));
         }
         reader.close();
     }
 
     public String getFuzzyResults() {
-        String foundName = this.d.get("title");
+        String foundName = this.doc.get("title");
         if (foundName == null) {
             foundName = "Nicht Gefunden";
         }

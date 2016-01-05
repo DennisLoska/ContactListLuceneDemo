@@ -49,6 +49,7 @@ public class PersonOverviewController {
     private ContactMain contactMain;
     private Person foundPerson = new Person();
     private LuceneIndexSearcher luceneQuery;
+    private LuceneTestImplementation luceneTest;
     private LuceneIndex luceneIndex;
 
     /**
@@ -218,12 +219,15 @@ public class PersonOverviewController {
         }
         this.luceneQuery = new LuceneIndexSearcher(searchRequest);
         this.luceneIndex = new LuceneIndex();
+        this.luceneTest = new LuceneTestImplementation(searchRequest,contactMain);
+
 
         luceneIndex.createDirectory();
         luceneIndex.createIndex(contactMain);
         luceneQuery.searchIndex();
-        setPersonDetails(this.foundPerson);
 
+        //luceneTest.searchEngine();
+        setPersonDetails(this.foundPerson);
     }
 
     /*

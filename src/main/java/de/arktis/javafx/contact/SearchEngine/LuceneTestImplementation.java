@@ -138,11 +138,11 @@ public class LuceneTestImplementation {
         //3. output
         for (int i = 0; i < hits.length; ++i) {
             this.docId = hits[i].doc;
-            this.d = searcher.doc(docId);
+            this.doc = searcher.doc(docId);
 
-            this.fuzzyResults[i] = this.d.get("title");
+            this.fuzzyResults[i] = this.doc.get("title");
             System.out.println("Found " + hits.length + " hits.");
-            System.out.println((i + 1) + ". " + d.get("title"));
+            System.out.println((i + 1) + ". " + doc.get("title"));
         }
         reader.close();
     }

@@ -8,6 +8,8 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
@@ -17,13 +19,26 @@ public class LuceneIndex {
 
     private ContactMain contactMain;
     private IndexWriter indWriter;
-    private Document doc;
+    private static Document doc = new Document();
+    private static Directory index;
+    private StandardAnalyzer analyzer;
+    private IndexWriterConfig indexConfig;
+    private IndexWriterConfig indexUpConfig;
+
+    public static Document getDoc() {
+        return doc;
+    }
+
+    public static Directory getIndex() {
+        return index;
+    }
 
     public void createDirectory() {
-        IndexWriterConfig indexConfig = new IndexWriterConfig(new StandardAnalyzer());
-        doc = LuceneUtils.getInstance().getDoc();
-        this.indWriter = LuceneUtils.getInstance().getIndWriter();
-        Directory index = LuceneUtils.getInstance().getIndex();
+
+        this.analyzer = new StandardAnalyzer();
+        this.indexConfig = new IndexWriterConfig(analyzer);
+        this.indexUpConfig = new IndexWriterConfig(analyzer);
+        this.index = new RAMDirectory();
         try {
             indWriter = new IndexWriter(index, indexConfig);
         } catch (IOException e) {
@@ -35,6 +50,7 @@ public class LuceneIndex {
         //TODO deprecatete Methode updaten
         this.contactMain = contactMain;
         for (Person person : contactMain.getPersonData()) {
+            this.doc = new Document();
             System.out.println("indexing " + person.getFirstName() + " "
                     + person.getLastName());
             doc.add(new Field("title", person.getFirstName() + " "
