@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2728fedf-37b1-43c7-85d4-f7659cb051f3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/SearchEngine/LuceneIndex.java" afterPath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/SearchEngine/LuceneIndex.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/SearchEngine/LuceneIndexSearcher.java" afterPath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/SearchEngine/LuceneIndexSearcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/SearchEngine/LuceneTestImplementation.java" afterPath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/SearchEngine/LuceneTestImplementation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/controller/PersonOverviewController.java" afterPath="$PROJECT_DIR$/src/main/java/de/arktis/javafx/contact/controller/PersonOverviewController.java" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -763,7 +759,7 @@
       <workItem from="1451983362725" duration="465000" />
       <workItem from="1451983871992" duration="13399000" />
       <workItem from="1452004652621" duration="79000" />
-      <workItem from="1452005795652" duration="4560000" />
+      <workItem from="1452005795652" duration="4708000" />
     </task>
     <task id="LOCAL-00001" summary="Objektorientierung">
       <created>1451924488089</created>
@@ -783,11 +779,17 @@
       <option name="project" value="LOCAL" />
       <updated>1452001575323</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Lucene funktioniert!">
+      <created>1452011048123</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1452011048123</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38190000" />
+    <option name="totallyTimeSpent" value="38338000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -876,7 +878,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Objektorientierung" />
     <MESSAGE value="Fertigstellung der OO-Klassen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fertigstellung der OO-Klassen" />
+    <MESSAGE value="Lucene funktioniert!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lucene funktioniert!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
