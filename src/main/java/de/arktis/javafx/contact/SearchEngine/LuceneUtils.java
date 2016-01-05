@@ -17,7 +17,7 @@ public class LuceneUtils {
     private static LuceneUtils utilsInstance = null;
     private int docID;
     private Document doc = new Document();
-    private IndexWriterConfig indexConfig = new IndexWriterConfig(new StandardAnalyzer());
+    private IndexWriterConfig indexConfig;
     private Directory index = new RAMDirectory();
     private IndexReader reader;
     private IndexSearcher searcher;

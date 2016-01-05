@@ -16,6 +16,7 @@ import de.arktis.javafx.contact.ContactMain;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.apache.lucene.queryparser.classic.ParseException;
+
 import java.io.IOException;
 
 public class PersonOverviewController {
@@ -75,6 +76,7 @@ public class PersonOverviewController {
                 (observable, oldValue, newValue) -> {
                     showPersonDetails(newValue);
 
+                    //TODO Update-Methode
                     /* updateDocument-Methode noch nicht fertig
                     try {
                         try {
@@ -178,15 +180,16 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
     }
+
     /*
      * Startt Suche, sobald erster Buchstabe getippt wird.
      * Noch kein Popup daher auskommentiert
      */
     @FXML
     private void startSearch(KeyEvent event) throws IOException, ParseException {
-            handleSearch();
-            //contactMain.showSearchPopup(event);
-        }
+        handleSearch();
+        //contactMain.showSearchPopup(event);
+    }
 
     /*
      *startet die Suche auch, wenn Enter gedrückt wird und schließt das Popup
@@ -197,9 +200,9 @@ public class PersonOverviewController {
         if (event.getCode() == KeyCode.ENTER) {
             handleSearch();
             contactMain.closeSearchPopup();
-
         }
     }
+
     /*
      *Aktion, wenn der Such-Button angeklickt wird.
      *
@@ -210,7 +213,7 @@ public class PersonOverviewController {
         request = new Searchrequest();
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
-        if (searchRequest == null){
+        if (searchRequest == null) {
             searchRequest = "Null Catcher";
         }
         this.luceneQuery = new LuceneIndexSearcher(searchRequest, new ContactMain());
@@ -222,6 +225,7 @@ public class PersonOverviewController {
         setPersonDetails(this.foundPerson);
 
     }
+
     /*
      *Gleicht die Kontaktliste anhand des vollen Namens ab.
      */
@@ -246,6 +250,7 @@ public class PersonOverviewController {
     public Person getFoundPerson() {
         return this.foundPerson;
     }
+
     /**
      * Is called by the main application to give a reference back to itself.
      *

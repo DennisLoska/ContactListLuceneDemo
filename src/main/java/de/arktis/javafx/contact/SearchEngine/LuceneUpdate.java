@@ -10,9 +10,6 @@ import org.apache.lucene.index.Term;
 
 import java.io.IOException;
 
-/**
- * Created by Pati on 04.01.2016.
- */
 public class LuceneUpdate {
 
     private LuceneUpdate update = new LuceneUpdate();
@@ -20,6 +17,7 @@ public class LuceneUpdate {
     private PersonOverviewController persOvCtrl;
     private ContactMain contactMain;
 
+    //TODO Update-Methode fertigstellen
     public void updateIndex() throws IOException {
 
         Document doc;

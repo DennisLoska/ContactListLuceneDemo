@@ -27,38 +27,29 @@ public class LuceneIndexSearcher {
     }
 
     public void searchIndex() throws IOException {
-
         Query fuzzyQuery = new FuzzyQuery(new Term("title", this.searchRequest), 2);
         System.out.println(this.searchRequest);
         int hitsPerPage = 10;
-
         //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen
         this.reader = DirectoryReader.open(LuceneUtils.getInstance().getIndex());
-
         IndexSearcher searcher = new IndexSearcher(reader);
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
         this.fuzzyResults = new String[hits.length];
-
         //3. output
         for (int i = 0; i < hits.length; ++i) {
-
             this.docID = hits[i].doc;
             LuceneUtils.getInstance().setDocID(docID);
             this.d = searcher.doc(docID);
-
             fuzzyResults[i] = this.d.get("title");
             System.out.println("Found " + hits.length + " hits.");
             System.out.println((i + 1) + ". " + d.get("title"));
         }
         reader.close();
-
     }
-
 
     public String getFuzzyResults() {
         String foundName = this.d.get("title");
         if (foundName == null) {
-            //System.out.println("Es wurde kein Kontakt gefunden.");
             foundName = "Nicht Gefunden";
         }
         return foundName;
