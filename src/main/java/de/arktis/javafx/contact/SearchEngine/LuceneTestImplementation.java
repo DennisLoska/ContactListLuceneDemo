@@ -66,19 +66,6 @@ public class LuceneTestImplementation {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     /*
      * 1.Es wird im for-Loop die Kontaktliste durchlaufen und alle Namen der Personen
      *   in einem erstellten Inde gespeichert. Pro Person wurden zwei Felder "title" und

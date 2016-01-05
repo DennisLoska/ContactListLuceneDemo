@@ -1,6 +1,6 @@
 package de.arktis.javafx.contact.SearchEngine;
 
-import de.arktis.javafx.contact.ContactMain;
+import de.arktis.javafx.contact.model.Searchrequest;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -14,30 +14,26 @@ import java.io.IOException;
 
 public class LuceneIndexSearcher {
 
-    private ContactMain contactMain;
-    private int docID;
     private String searchRequest;
-    private String[] fuzzyResults;
-    private Document d = LuceneUtils.getInstance().getDoc();
-    private IndexReader reader = LuceneUtils.getInstance().getReader();
+    private Document d = new Document();
 
-    public LuceneIndexSearcher(String searchRequest, ContactMain contactMain) {
+
+    public LuceneIndexSearcher(String searchRequest) {
         this.searchRequest = searchRequest;
-        this.contactMain = contactMain;
     }
 
     public void searchIndex() throws IOException {
         Query fuzzyQuery = new FuzzyQuery(new Term("title", this.searchRequest), 2);
         System.out.println(this.searchRequest);
         int hitsPerPage = 10;
-        //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen
-        this.reader = DirectoryReader.open(LuceneUtils.getInstance().getIndex());
+        //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen  LuceneUtils.getInstance().getIndex()
+        IndexReader reader = DirectoryReader.open(LuceneUtils.getInstance().getIndex());
         IndexSearcher searcher = new IndexSearcher(reader);
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
-        this.fuzzyResults = new String[hits.length];
+        String[] fuzzyResults = new String[hits.length];
         //3. output
         for (int i = 0; i < hits.length; ++i) {
-            this.docID = hits[i].doc;
+            int docID = hits[i].doc;
             LuceneUtils.getInstance().setDocID(docID);
             this.d = searcher.doc(docID);
             fuzzyResults[i] = this.d.get("title");
@@ -54,6 +50,4 @@ public class LuceneIndexSearcher {
         }
         return foundName;
     }
-
-
 }

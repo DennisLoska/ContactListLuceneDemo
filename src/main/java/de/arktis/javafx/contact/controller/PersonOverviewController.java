@@ -216,11 +216,11 @@ public class PersonOverviewController {
         if (searchRequest == null) {
             searchRequest = "Null Catcher";
         }
-        this.luceneQuery = new LuceneIndexSearcher(searchRequest, new ContactMain());
+        this.luceneQuery = new LuceneIndexSearcher(searchRequest);
         this.luceneIndex = new LuceneIndex();
 
         luceneIndex.createDirectory();
-        luceneIndex.createIndex();
+        luceneIndex.createIndex(contactMain);
         luceneQuery.searchIndex();
         setPersonDetails(this.foundPerson);
 

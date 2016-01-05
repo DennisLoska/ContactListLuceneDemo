@@ -15,32 +15,25 @@ import java.io.IOException;
 
 public class LuceneIndex {
 
-    private ContactMain contactMain = new ContactMain();
+    private ContactMain contactMain;
     private IndexWriter indWriter;
-    private IndexWriterConfig indexConfig;
-    private Directory index;
     private Document doc;
 
     public void createDirectory() {
-        if (indexConfig == null) {
-            indexConfig = LuceneUtils.getInstance().getIndexConfig();
-            indexConfig = new IndexWriterConfig(new StandardAnalyzer());
-        }
+        IndexWriterConfig indexConfig = new IndexWriterConfig(new StandardAnalyzer());
         doc = LuceneUtils.getInstance().getDoc();
         this.indWriter = LuceneUtils.getInstance().getIndWriter();
-        this.index = LuceneUtils.getInstance().getIndex();
+        Directory index = LuceneUtils.getInstance().getIndex();
         try {
-            if (indWriter == null) {
-                indWriter = new IndexWriter(index, indexConfig);
-            }
-
+            indWriter = new IndexWriter(index, indexConfig);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void createIndex() {
+    public void createIndex(ContactMain contactMain) {
         //TODO deprecatete Methode updaten
+        this.contactMain = contactMain;
         for (Person person : contactMain.getPersonData()) {
             System.out.println("indexing " + person.getFirstName() + " "
                     + person.getLastName());
@@ -63,9 +56,6 @@ public class LuceneIndex {
         }
         System.out.println("\nIndex erstellt:");
         System.out.println(this.contactMain.getPersonData().size() + " Personen insgesamt. \n");
-
     }
-
-
 }
 
