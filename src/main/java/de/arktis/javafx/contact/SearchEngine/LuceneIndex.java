@@ -20,25 +20,16 @@ public class LuceneIndex {
     private ContactMain contactMain;
     private IndexWriter indWriter;
     private static Document doc = new Document();
+    private int docID;
     private static Directory index;
     private StandardAnalyzer analyzer;
     private IndexWriterConfig indexConfig;
     private IndexWriterConfig indexUpConfig;
 
-    public static Document getDoc() {
-        return doc;
-    }
-
-    public static Directory getIndex() {
-        return index;
-    }
-
     public void createDirectory() {
-
         this.analyzer = new StandardAnalyzer();
-        this.indexConfig = new IndexWriterConfig(analyzer);
-        this.indexUpConfig = new IndexWriterConfig(analyzer);
         this.index = new RAMDirectory();
+        this.indexConfig = new IndexWriterConfig(analyzer);
         try {
             indWriter = new IndexWriter(index, indexConfig);
         } catch (IOException e) {
@@ -72,6 +63,22 @@ public class LuceneIndex {
         }
         System.out.println("\nIndex erstellt:");
         System.out.println(this.contactMain.getPersonData().size() + " Personen insgesamt. \n");
+    }
+
+    public IndexWriter getIndWriter() {
+        return indWriter;
+    }
+    public int getDocID() {
+        return docID;
+    }
+    public static Document getDoc() {
+        return doc;
+    }
+    public static Directory getIndex() {
+        return index;
+    }
+    public void setDocID(int docID) {
+        this.docID = docID;
     }
 }
 

@@ -16,25 +16,32 @@ public class LuceneIndexSearcher {
 
     private String searchRequest;
     private Document doc = LuceneIndex.getDoc();
+    private LuceneIndex indexInstance = new LuceneIndex();
 
+    public IndexReader getReader() {
+        return reader;
+    }
+
+    IndexReader reader;
 
     public LuceneIndexSearcher(String searchRequest) {
         this.searchRequest = searchRequest;
+    }
+    public LuceneIndexSearcher() {
+
     }
 
     public void searchIndex() throws IOException {
         Query fuzzyQuery = new FuzzyQuery(new Term("title", this.searchRequest), 2);
         System.out.println(this.searchRequest);
         int hitsPerPage = 10;
-        //nicht gebraucht, wenn index bereits offen bzw. nicht geschlossen  LuceneUtils.getInstance().getIndex()
-        IndexReader reader = DirectoryReader.open(LuceneIndex.getIndex());
+        this.reader = DirectoryReader.open(LuceneIndex.getIndex());
         IndexSearcher searcher = new IndexSearcher(reader);
         ScoreDoc[] hits = searcher.search(fuzzyQuery, hitsPerPage).scoreDocs;
         String[] fuzzyResults = new String[hits.length];
-        //3. output
         for (int i = 0; i < hits.length; ++i) {
             int docID = hits[i].doc;
-            LuceneUtils.getInstance().setDocID(docID);
+            indexInstance.setDocID(docID);
             this.doc = searcher.doc(docID);
             fuzzyResults[i] = this.doc.get("title");
             System.out.println("Found " + hits.length + " hits.");

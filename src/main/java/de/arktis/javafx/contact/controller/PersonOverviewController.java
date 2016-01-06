@@ -210,7 +210,6 @@ public class PersonOverviewController {
      */
     @FXML
     private void handleSearch() throws IOException, ParseException {
-
         request = new Searchrequest();
         request.setSearchField(searchField.getText());
         String searchRequest = request.getSearchField();
@@ -221,11 +220,9 @@ public class PersonOverviewController {
         this.luceneIndex = new LuceneIndex();
         this.luceneTest = new LuceneTestImplementation(searchRequest,contactMain);
 
-
         luceneIndex.createDirectory();
         luceneIndex.createIndex(contactMain);
         luceneQuery.searchIndex();
-
         //luceneTest.searchEngine();
         setPersonDetails(this.foundPerson);
     }
